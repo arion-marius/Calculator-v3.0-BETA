@@ -108,26 +108,26 @@ namespace Calculator_v3._0
 
         private void Minus_Click(object sender, RoutedEventArgs e)
         {
-            if (Case == 2)
-            {
-                Display.Text = Math.Round(operation, 2) + "+" + Result.Text + "-";
-                operation += float.Parse(Result.Text);
-                Result.Clear();
-            }
-            else if (operation == 1E-09)
+            if (operation == 1E-09)
             {
                 Display.Text = Math.Round(operation, 2) + "+" + Result.Text + "-";
                 operation = float.Parse(Result.Text) + float.Parse(Result.Text);
                 operation -= float.Parse(Result.Text);
                 Result.Clear();
             }
-            else if(Case == 3)
+            else if (Case == 2)
+            {
+                Display.Text = Math.Round(operation, 2) + "+" + Result.Text + "-";
+                operation += float.Parse(Result.Text);
+                Result.Clear();
+            }
+            else if (Case == 3)
             {
                 Display.Text = Math.Round(operation, 2) + "*" + Result.Text + "-";
                 operation *= float.Parse(Result.Text);
                 Result.Clear();
             }
-            else if(Case == 4)
+            else if (Case == 4)
             {
                 Display.Text = Math.Round(operation, 2) + "/" + Result.Text + "-";
                 operation /= float.Parse(Result.Text);
@@ -212,17 +212,17 @@ namespace Calculator_v3._0
 
         private void Result_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            //Nothing
         }
 
         private void Display_TextChanged_1(object sender, TextChangedEventArgs e)
         {
-
+            //Nothing
         }
 
         private void Quadratic_ecuation_Click(object sender, RoutedEventArgs e)
         {
-            int number = int.Parse(Result.Text) * int.Parse(Result.Text);
+            float number = float.Parse(Result.Text) * float.Parse(Result.Text);
             Result.Text = number.ToString();
         }
 
@@ -237,7 +237,7 @@ namespace Calculator_v3._0
             }
             else if (Case == 1)
             {
-                Display.Text ="(" + Math.Round(operation, 2) + "-" 
+                Display.Text = "(" + Math.Round(operation, 2) + "-"
                     + Result.Text + ")" + "*";
                 operation -= float.Parse(Result.Text);
                 Result.Clear();
@@ -287,7 +287,7 @@ namespace Calculator_v3._0
                 operation += float.Parse(Result.Text);
                 Result.Clear();
             }
-            else if(Case == 3)
+            else if (Case == 3)
             {
                 Display.Text = "(" + Math.Round(operation, 2) + "*"
                     + Result.Text + ")" + "/";
@@ -300,6 +300,11 @@ namespace Calculator_v3._0
                 Result.Clear();
             }
             Case = 4;
+        }
+
+        private void CE_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Result.Clear();
         }
     }
 }
