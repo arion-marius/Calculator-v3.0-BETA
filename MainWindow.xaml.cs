@@ -24,6 +24,7 @@ namespace Calculator_v3._0
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
@@ -110,6 +111,7 @@ namespace Calculator_v3._0
         {
             if (operation == 1E-09)
             {
+                Error_on_a_repetead_command();
                 Display.Text = Math.Round(operation, 2) + "+" + Result.Text + "-";
                 operation = float.Parse(Result.Text) + float.Parse(Result.Text);
                 operation -= float.Parse(Result.Text);
@@ -118,25 +120,25 @@ namespace Calculator_v3._0
             else if (Case == 2)
             {
                 Display.Text = Math.Round(operation, 2) + "+" + Result.Text + "-";
-                operation += float.Parse(Result.Text);
+                Operations_per_Cases(Case);
                 Result.Clear();
             }
             else if (Case == 3)
             {
                 Display.Text = Math.Round(operation, 2) + "*" + Result.Text + "-";
-                operation *= float.Parse(Result.Text);
+                Operations_per_Cases(Case);
                 Result.Clear();
             }
             else if (Case == 4)
             {
                 Display.Text = Math.Round(operation, 2) + "/" + Result.Text + "-";
-                operation /= float.Parse(Result.Text);
+                Operations_per_Cases(Case);
                 Result.Clear();
             }
             else
             {
                 Display.Text = Math.Round(operation, 2) + "-" + Result.Text + "-";
-                operation -= float.Parse(Result.Text);
+                Operations_per_Cases(Case);
                 Result.Clear();
             }
             Case = 1;
@@ -147,25 +149,26 @@ namespace Calculator_v3._0
             if (Case == 1)
             {
                 Display.Text = Math.Round(operation, 2) + "-" + Result.Text + "+";
-                operation -= float.Parse(Result.Text);
+                Operations_per_Cases(Case);
                 Result.Clear();
             }
             else if (Case == 3)
             {
                 Display.Text = Math.Round(operation, 2) + "*" + Result.Text + "+";
-                operation *= float.Parse(Result.Text);
+                Operations_per_Cases(Case);
                 Result.Clear();
             }
             else if (Case == 4)
             {
                 Display.Text = Math.Round(operation, 2) + "/" + Result.Text + "+";
-                operation /= float.Parse(Result.Text);
+                Operations_per_Cases(Case);
                 Result.Clear();
             }
             else
             {
+                Case = 2;
                 Display.Text = Math.Round(operation, 2) + "+" + Result.Text + "+";
-                operation += float.Parse(Result.Text);
+                Operations_per_Cases(Case);
                 Result.Clear();
             }
             Case = 2;
@@ -222,6 +225,7 @@ namespace Calculator_v3._0
 
         private void Quadratic_ecuation_Click(object sender, RoutedEventArgs e)
         {
+            Error_on_a_repetead_command();
             float number = float.Parse(Result.Text) * float.Parse(Result.Text);
             Result.Text = number.ToString();
         }
@@ -230,6 +234,7 @@ namespace Calculator_v3._0
         {
             if (operation == 1E-09)
             {
+                Error_on_a_repetead_command();
                 Display.Text = "(" + Math.Round(operation, 2) + "+"
                     + Result.Text + ")" + "*";
                 operation = Math.Round(operation, 2) + float.Parse(Result.Text);
@@ -239,26 +244,27 @@ namespace Calculator_v3._0
             {
                 Display.Text = "(" + Math.Round(operation, 2) + "-"
                     + Result.Text + ")" + "*";
-                operation -= float.Parse(Result.Text);
+                Operations_per_Cases(Case);
                 Result.Clear();
             }
             else if (Case == 2)
             {
                 Display.Text = "(" + Math.Round(operation, 2) + "+"
                     + Result.Text + ")" + "*";
-                operation += float.Parse(Result.Text);
+                Operations_per_Cases(Case);
                 Result.Clear();
             }
             else if (Case == 4)
             {
                 Display.Text = "(" + Math.Round(operation, 2) + "*"
                     + Result.Text + ")" + "*";
-                operation /= float.Parse(Result.Text);
+                Operations_per_Cases(Case);
                 Result.Clear();
             }
             else
             {
-                operation *= float.Parse(Result.Text);
+                Display.Text = Math.Round(operation, 2) + "*";
+                Operations_per_Cases(Case);
                 Result.Clear();
             }
             Case = 3;
@@ -268,6 +274,7 @@ namespace Calculator_v3._0
         {
             if (operation == 1E-09)
             {
+                Error_on_a_repetead_command();
                 Display.Text = "(" + Math.Round(operation, 2) + "+"
                     + Result.Text + ")" + "/";
                 operation = Math.Round(operation, 2) + float.Parse(Result.Text);
@@ -277,31 +284,62 @@ namespace Calculator_v3._0
             {
                 Display.Text = "(" + Math.Round(operation, 2) + "-"
                     + Result.Text + ")" + "/";
-                operation -= float.Parse(Result.Text);
+                Operations_per_Cases(Case);
                 Result.Clear();
             }
             else if (Case == 2)
             {
                 Display.Text = "(" + Math.Round(operation, 2) + "+"
                     + Result.Text + ")" + "/";
-                operation += float.Parse(Result.Text);
+                Operations_per_Cases(Case);
                 Result.Clear();
             }
             else if (Case == 3)
             {
                 Display.Text = "(" + Math.Round(operation, 2) + "*"
                     + Result.Text + ")" + "/";
-                operation *= float.Parse(Result.Text);
+                Operations_per_Cases(Case);
                 Result.Clear();
             }
             else
             {
-                operation /= float.Parse(Result.Text);
+                Display.Text = Math.Round(operation, 2) + "/";
+                Operations_per_Cases(Case);
                 Result.Clear();
             }
             Case = 4;
         }
+        private void Operations_per_Cases(int Case)
+        {
+            switch (Case)
+            {
+                case 1:
+                    Error_on_a_repetead_command();
+                    operation -= float.Parse(Result.Text);
+                    break;
+                case 2:
+                    Error_on_a_repetead_command();
+                    operation += float.Parse(Result.Text);
+                    break;
+                case 3:
+                    Error_on_a_repetead_command();
+                    operation *= float.Parse(Result.Text);
+                    break;
+                case 4:
+                    Error_on_a_repetead_command();
+                    operation /= float.Parse(Result.Text);
+                    break;
+            }
 
+        }
+ 
+        private void Error_on_a_repetead_command()
+        {
+            if (Result.Text == "")
+            {
+                Result.Text = Result.Text + 0;
+            }
+        }
         private void CE_Button_Click(object sender, RoutedEventArgs e)
         {
             Result.Clear();
