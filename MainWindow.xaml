@@ -17,7 +17,7 @@
             <RowDefinition Height="101*"/>
             <RowDefinition Height="212*"/>
         </Grid.RowDefinitions>
-        <TextBox x:Name="Result" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="388" Height="104" TextChanged="Result_TextChanged" FontSize="72" BorderBrush="White"/>
+        <TextBox x:Name="Result" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="388" Height="104" FontSize="72" BorderBrush="White"/>
         <Button x:Name="One" Content="1" HorizontalAlignment="Left" Height="68" Margin="10,3,0,0" VerticalAlignment="Top" Width="84" FontSize="48" Click="One_Click" Grid.Row="1"/>
         <Button x:Name="Two" Content="2" HorizontalAlignment="Left" Height="68" Margin="120,3,0,0" VerticalAlignment="Top" Width="84" FontSize="48" Click="Two_Click" Grid.Row="1"/>
         <Button x:Name="Three" Content="3" HorizontalAlignment="Left" Height="68" Margin="233,3,0,0" VerticalAlignment="Top" Width="84" FontSize="48" Click="Three_Click" Grid.Row="1"/>
@@ -34,7 +34,7 @@
         <Button x:Name="Minus" Content="-" HorizontalAlignment="Left" Height="68" Margin="335,209,0,0" VerticalAlignment="Top" Width="63" Grid.Row="1" FontSize="48" Click="Minus_Click"/>
         <Button x:Name="Six" Content="6" HorizontalAlignment="Left" Height="68" Margin="233,105,0,0" Grid.Row="1" VerticalAlignment="Top" Width="84" Click="Six_Click_1" FontSize="48"/>
         <Button x:Name="Equal" Content="=" HorizontalAlignment="Left" Height="68" Margin="335,319,0,0" Grid.Row="1" VerticalAlignment="Top" Width="63" FontSize="36" Click="Equal_Click_1"/>
-        <TextBox x:Name="Display" HorizontalAlignment="Left" Margin="267,52,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="131" Height="29" FontSize="22" TextChanged="Display_TextChanged_1" BorderBrush="White"/>
+        <TextBox x:Name="Display" HorizontalAlignment="Left" Margin="267,52,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="131" Height="29" FontSize="22" BorderBrush="White"/>
         <Button x:Name="Quadratic_ecuation" Content="x^2" HorizontalAlignment="Left" Height="37" Margin="10,161,0,0" VerticalAlignment="Top" Width="84" FontSize="24" Click="Quadratic_ecuation_Click"/>
         <Button x:Name="Multiplication" Content="*" HorizontalAlignment="Left" Height="37" Margin="120,161,0,0" VerticalAlignment="Top" Width="84" Click="Multiplication_Click" FontSize="36"/>
         <Button x:Name="Division" Content="/" HorizontalAlignment="Left" Height="37" Margin="233,161,0,0" VerticalAlignment="Top" Width="84" FontSize="24" Click="Division_Click"/>

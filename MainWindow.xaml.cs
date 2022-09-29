@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Diagnostics;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -29,8 +30,8 @@ namespace Calculator_v3._0
         {
             InitializeComponent();
         }
-        double operation = 1E-09;
-        int Case;
+        double _operation = 1E-09;
+        int operationType;
         private void One_Click(object sender, RoutedEventArgs e)
         {
             Result.Text = Result.Text + 1;
@@ -98,264 +99,231 @@ namespace Calculator_v3._0
 
         private void Comma_Click(object sender, RoutedEventArgs e)
         {
-            // will throw an exception, if the user inserts text (because he is allowed).
-            int number = int.Parse(Result.Text);
-            
-            // the adition between an int and a string will result in a string.
-            var finalNumber = number + ".";
-            
-            // calling ToString() on a string will alocate a second string (4 bytes + 4 extra bytes)
-            Result.Text = finalNumber.ToString();
+            var finalNumber = Result.Text + ".";
+            Result.Text = finalNumber;
         }
 
         private void Equal_Click_1(object sender, RoutedEventArgs e)
         {
-            Cases(Case);
+            Casesx((operation)operationType);
         }
 
         private void Minus_Click(object sender, RoutedEventArgs e)
         {
-            if (operation == 1E-09)
+            if (_operation == 1E-09)
             {
-                Error_on_a_repetead_command();
-                
-                // first string allocated --> Math.Round(operation, 2) + "+"
-                // 2nd string allocated --> first string + Result.Text
-                // 3rd string allocated --> 2nd string + "-"
-                // you can use string interpolation $"{Math.Round(operation, 2)}+{Result.Text}-"
-                Display.Text = Math.Round(operation, 2) + "+" + Result.Text + "-";
-                
-                // you are using 3 times float.Parse with the same parameter. A good practice would be to call it once,
-                // and store the result in a variable and use the result in all 3 places
-                // not clear why you add 2 times the parsed result and then subtract 1 time the same result
-                operation = float.Parse(Result.Text) + float.Parse(Result.Text);
-                operation -= float.Parse(Result.Text);
+                avoidRepeteadCommands();
+                Display.Text = $"{Math.Round(_operation, 2)} + {Result.Text} -";
+                _operation = 2 * float.Parse(Result.Text);
+                _operation -= float.Parse(Result.Text);
                 Result.Clear();
             }
-            else if (Case == 2)
+            else if (operationType == 2)
             {
-                Display.Text = Math.Round(operation, 2) + "+" + Result.Text + "-";
-                Operations_per_Cases(Case);
+                Display.Text = Math.Round(_operation, 2) + "+" + Result.Text + "-";
+                Operations_per_Cases((operation)operationType);
                 Result.Clear();
             }
-            else if (Case == 3)
+            else if (operationType == 3)
             {
-                Display.Text = Math.Round(operation, 2) + "*" + Result.Text + "-";
-                Operations_per_Cases(Case);
+                Display.Text = Math.Round(_operation, 2) + "*" + Result.Text + "-";
+                Operations_per_Cases((operation)operationType);
                 Result.Clear();
             }
-            else if (Case == 4)
+            else if (operationType == 4)
             {
-                Display.Text = Math.Round(operation, 2) + "/" + Result.Text + "-";
-                Operations_per_Cases(Case);
+                Display.Text = Math.Round(_operation, 2) + "/" + Result.Text + "-";
+                Operations_per_Cases((operation)operationType);
                 Result.Clear();
             }
             else
             {
-                Display.Text = Math.Round(operation, 2) + "-" + Result.Text + "-";
-                Operations_per_Cases(Case);
+                Display.Text = Math.Round(_operation, 2) + "-" + Result.Text + "-";
+                Operations_per_Cases((operation)operationType);
                 Result.Clear();
             }
-            Case = 1;
+            operationType = 1;
         }
 
         private void Plus_Click(object sender, RoutedEventArgs e)
         {
-            if (Case == 1)
+            if (operationType == 1)
             {
-                Display.Text = Math.Round(operation, 2) + "-" + Result.Text + "+";
-                Operations_per_Cases(Case);
+                Display.Text = Math.Round(_operation, 2) + "-" + Result.Text + "+";
+                Operations_per_Cases((operation)operationType);
                 Result.Clear();
             }
-            else if (Case == 3)
+            else if (operationType == 3)
             {
-                Display.Text = Math.Round(operation, 2) + "*" + Result.Text + "+";
-                Operations_per_Cases(Case);
+                Display.Text = Math.Round(_operation, 2) + "*" + Result.Text + "+";
+                Operations_per_Cases((operation)operationType);
                 Result.Clear();
             }
-            else if (Case == 4)
+            else if (operationType == 4)
             {
-                Display.Text = Math.Round(operation, 2) + "/" + Result.Text + "+";
-                Operations_per_Cases(Case);
+                Display.Text = Math.Round(_operation, 2) + "/" + Result.Text + "+";
+                Operations_per_Cases((operation)operationType);
                 Result.Clear();
             }
             else
             {
-                Case = 2;
-                Display.Text = Math.Round(operation, 2) + "+" + Result.Text + "+";
-                Operations_per_Cases(Case);
+                operationType = 2;
+                Display.Text = Math.Round(_operation, 2) + "+" + Result.Text + "+";
+                Operations_per_Cases((operation)operationType);
                 Result.Clear();
             }
-            Case = 2;
+            operationType = 2;
         }
-
-        public void Cases(int Case)
+            
+        enum operation
         {
-            switch (Case)
+            Minus = 1,
+            Plus = 2,
+            Multiply = 3,
+            Divide = 4
+        }
+        void Casesx(operation operationType)
+        {
+            switch (operationType)
             {
-                // instead of switching based on an int, use an enum and give meaningful names to the cases.
-                // the code in all cases is the same, except the mathematic operations --> use the DRY principle (Don't Repeat Yourself) 
-                case 1:
-                    Display.Text = Math.Round(operation, 2) + "-" + Result.Text + "=";
-                    operation -= float.Parse(Result.Text);
-                    Result.Clear();
-                    Result.Text = Math.Round(operation, 2).ToString();
+                case operation.Minus:
+                    Display.Text = Math.Round(_operation, 2) + "-" + Result.Text + "=";
+                    _operation -= float.Parse(Result.Text);
                     break;
-                case 2:
-                    Display.Text = Math.Round(operation, 2) + "+" + Result.Text + "=";
-                    operation += float.Parse(Result.Text);
-                    Result.Clear();
-                    Result.Text = Math.Round(operation, 2).ToString();
+                case operation.Plus:
+                    Display.Text = Math.Round(_operation, 2) + "+" + Result.Text + "=";
+                    _operation += float.Parse(Result.Text);
                     break;
-                case 3:
-                    Display.Text = Math.Round(operation, 2) + "*" + Result.Text + "=";
-                    operation *= float.Parse(Result.Text);
-                    Result.Clear();
-                    Result.Text = Math.Round(operation, 2).ToString();
+                case operation.Multiply:
+                    Display.Text = Math.Round(_operation, 2) + "*" + Result.Text + "=";
+                    _operation *= float.Parse(Result.Text);
                     break;
-                case 4:
-                    Display.Text = Math.Round(operation, 2) + "/" + Result.Text + "=";
-                    operation /= float.Parse(Result.Text);
-                    Result.Clear();
-                    Result.Text = Math.Round(operation, 2).ToString();
+                case operation.Divide:
+                    Display.Text = Math.Round(_operation, 2) + "/" + Result.Text + "=";
+                    _operation /= float.Parse(Result.Text);
                     break;
             }
+            Result.Clear();
+            Result.Text = Math.Round(_operation, 2).ToString();
         }
-
+     
         private void Clear_Click(object sender, RoutedEventArgs e)
         {
             Result.Clear();
             Display.Clear();
-            operation = 1E-09;
-            Case = 0;
-        }
-
-        // remove if not needed
-        private void Result_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            //Nothing
-        }
-
-        private void Display_TextChanged_1(object sender, TextChangedEventArgs e)
-        {
-            //Nothing
+            _operation = 1E-09;
+            operationType = 0;
         }
 
         private void Quadratic_ecuation_Click(object sender, RoutedEventArgs e)
         {
-            Error_on_a_repetead_command();
+            avoidRepeteadCommands();
             float number = float.Parse(Result.Text) * float.Parse(Result.Text);
             Result.Text = number.ToString();
         }
 
         private void Multiplication_Click(object sender, RoutedEventArgs e)
         {
-            if (operation == 1E-09)
+            if (_operation == 1E-09)
             {
-                Error_on_a_repetead_command();
-                Display.Text = "(" + Math.Round(operation, 2) + "+"
+                avoidRepeteadCommands();
+                Display.Text = "(" + Math.Round(_operation, 2) + "+"
                     + Result.Text + ")" + "*";
-                operation = Math.Round(operation, 2) + float.Parse(Result.Text);
+                _operation = Math.Round(_operation, 2) + float.Parse(Result.Text);
                 Result.Clear();
             }
-            else if (Case == 1)
+            else if (operationType == 1)
             {
-                Display.Text = "(" + Math.Round(operation, 2) + "-"
+                Display.Text = "(" + Math.Round(_operation, 2) + "-"
                     + Result.Text + ")" + "*";
-                Operations_per_Cases(Case);
+                Operations_per_Cases((operation)operationType);
                 Result.Clear();
             }
-            else if (Case == 2)
+            else if (operationType == 2)
             {
-                Display.Text = "(" + Math.Round(operation, 2) + "+"
+                Display.Text = "(" + Math.Round(_operation, 2) + "+"
                     + Result.Text + ")" + "*";
-                Operations_per_Cases(Case);
+                Operations_per_Cases((operation)operationType);
                 Result.Clear();
             }
-            else if (Case == 4)
+            else if (operationType == 4)
             {
-                Display.Text = "(" + Math.Round(operation, 2) + "*"
+                Display.Text = "(" + Math.Round(_operation, 2) + "*"
                     + Result.Text + ")" + "*";
-                Operations_per_Cases(Case);
+                Operations_per_Cases((operation)operationType);
                 Result.Clear();
             }
             else
             {
-                Display.Text = Math.Round(operation, 2) + "*";
-                Operations_per_Cases(Case);
+                Display.Text = Math.Round(_operation, 2) + "*";
+                Operations_per_Cases((operation)operationType);
                 Result.Clear();
             }
-            Case = 3;
+            operationType = 3;
         }
 
         private void Division_Click(object sender, RoutedEventArgs e)
         {
-            if (operation == 1E-09)
+            if (_operation == 1E-09)
             {
-                Error_on_a_repetead_command();
-                Display.Text = "(" + Math.Round(operation, 2) + "+"
+                avoidRepeteadCommands();
+                Display.Text = "(" + Math.Round(_operation, 2) + "+"
                     + Result.Text + ")" + "/";
-                operation = Math.Round(operation, 2) + float.Parse(Result.Text);
+                _operation = Math.Round(_operation, 2) + float.Parse(Result.Text);
                 Result.Clear();
             }
-            else if (Case == 1)
+            else if (operationType == 1)
             {
-                Display.Text = "(" + Math.Round(operation, 2) + "-"
+                Display.Text = "(" + Math.Round(_operation, 2) + "-"
                     + Result.Text + ")" + "/";
-                Operations_per_Cases(Case);
+                Operations_per_Cases((operation)operationType);
                 Result.Clear();
             }
-            else if (Case == 2)
+            else if (operationType == 2)
             {
-                Display.Text = "(" + Math.Round(operation, 2) + "+"
+                Display.Text = "(" + Math.Round(_operation, 2) + "+"
                     + Result.Text + ")" + "/";
-                Operations_per_Cases(Case);
+                Operations_per_Cases((operation)operationType);
                 Result.Clear();
             }
-            else if (Case == 3)
+            else if (operationType == 3)
             {
-                Display.Text = "(" + Math.Round(operation, 2) + "*"
+                Display.Text = "(" + Math.Round(_operation, 2) + "*"
                     + Result.Text + ")" + "/";
-                Operations_per_Cases(Case);
+                Operations_per_Cases((operation)operationType);
                 Result.Clear();
             }
             else
             {
-                Display.Text = Math.Round(operation, 2) + "/";
-                Operations_per_Cases(Case);
+                Display.Text = Math.Round(_operation, 2) + "/";
+                Operations_per_Cases((operation)operationType);
                 Result.Clear();
             }
-            Case = 4;
+            operationType = 4;
         }
-        
-        // In .NET C3, naming convention for methods is PascalCase. It's method, put a verb in the name of the method.
-        // https://learn.microsoft.com/en-us/dotnet/standard/design-guidelines/general-naming-conventions
-        private void Operations_per_Cases(int Case)
+
+        private void Operations_per_Cases(operation operationType)
         {
-            switch (Case)
+            avoidRepeteadCommands();
+            switch (operationType)
             {
-                // Error_on_a_repetead_command() is call on all cases. Could be called just once, before the switch.
-                case 1:
-                    Error_on_a_repetead_command();
-                    operation -= float.Parse(Result.Text);
+                case operation.Minus:
+                    _operation -= float.Parse(Result.Text);
                     break;
-                case 2:
-                    Error_on_a_repetead_command();
-                    operation += float.Parse(Result.Text);
+                case operation.Plus:
+                    _operation += float.Parse(Result.Text);
                     break;
-                case 3:
-                    Error_on_a_repetead_command();
-                    operation *= float.Parse(Result.Text);
+                case operation.Multiply:
+                    _operation *= float.Parse(Result.Text);
                     break;
-                case 4:
-                    Error_on_a_repetead_command();
-                    operation /= float.Parse(Result.Text);
+                case operation.Divide:
+                    _operation /= float.Parse(Result.Text);
                     break;
             }
 
         }
- 
-        private void Error_on_a_repetead_command()
+
+        private void avoidRepeteadCommands()
         {
             if (Result.Text == "")
             {
