@@ -83,6 +83,7 @@ namespace Calculator_v3._0
 
         private void Opposite_Click(object sender, RoutedEventArgs e)
         {
+            // will throw an exception, if the user inserts text (because he is allowed).
             float number = float.Parse(Result.Text);
             if (number > 0)
             {
@@ -97,8 +98,13 @@ namespace Calculator_v3._0
 
         private void Comma_Click(object sender, RoutedEventArgs e)
         {
+            // will throw an exception, if the user inserts text (because he is allowed).
             int number = int.Parse(Result.Text);
+            
+            // the adition between an int and a string will result in a string.
             var finalNumber = number + ".";
+            
+            // calling ToString() on a string will alocate a second string (4 bytes + 4 extra bytes)
             Result.Text = finalNumber.ToString();
         }
 
@@ -112,7 +118,16 @@ namespace Calculator_v3._0
             if (operation == 1E-09)
             {
                 Error_on_a_repetead_command();
+                
+                // first string allocated --> Math.Round(operation, 2) + "+"
+                // 2nd string allocated --> first string + Result.Text
+                // 3rd string allocated --> 2nd string + "-"
+                // you can use string interpolation $"{Math.Round(operation, 2)}+{Result.Text}-"
                 Display.Text = Math.Round(operation, 2) + "+" + Result.Text + "-";
+                
+                // you are using 3 times float.Parse with the same parameter. A good practice would be to call it once,
+                // and store the result in a variable and use the result in all 3 places
+                // not clear why you add 2 times the parsed result and then subtract 1 time the same result
                 operation = float.Parse(Result.Text) + float.Parse(Result.Text);
                 operation -= float.Parse(Result.Text);
                 Result.Clear();
@@ -178,6 +193,8 @@ namespace Calculator_v3._0
         {
             switch (Case)
             {
+                // instead of switching based on an int, use an enum and give meaningful names to the cases.
+                // the code in all cases is the same, except the mathematic operations --> use the DRY principle (Don't Repeat Yourself) 
                 case 1:
                     Display.Text = Math.Round(operation, 2) + "-" + Result.Text + "=";
                     operation -= float.Parse(Result.Text);
@@ -213,6 +230,7 @@ namespace Calculator_v3._0
             Case = 0;
         }
 
+        // remove if not needed
         private void Result_TextChanged(object sender, TextChangedEventArgs e)
         {
             //Nothing
@@ -309,10 +327,14 @@ namespace Calculator_v3._0
             }
             Case = 4;
         }
+        
+        // In .NET C3, naming convention for methods is PascalCase. It's method, put a verb in the name of the method.
+        // https://learn.microsoft.com/en-us/dotnet/standard/design-guidelines/general-naming-conventions
         private void Operations_per_Cases(int Case)
         {
             switch (Case)
             {
+                // Error_on_a_repetead_command() is call on all cases. Could be called just once, before the switch.
                 case 1:
                     Error_on_a_repetead_command();
                     operation -= float.Parse(Result.Text);
