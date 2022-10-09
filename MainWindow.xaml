@@ -12,7 +12,7 @@
             <GradientStop Color="#FFAC9292" Offset="0.502"/>
         </LinearGradientBrush>
     </Window.Background>
-    <Grid KeyDown="shortcutKeys">
+    <Grid KeyDown="shortcutKeys" UseLayoutRounding="False" AllowDrop="True" Focusable="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="101*"/>
             <RowDefinition Height="212*"/>

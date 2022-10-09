@@ -81,6 +81,30 @@ namespace Calculator_v3._0
         {
             Result.Text = Result.Text + 0;
         }
+        private void Clear_Click(object sender, RoutedEventArgs e)
+        {
+            Result.Clear();
+            Display.Clear();
+            _operation = 1E-09;
+            operationType = 0;
+            commaNumber = 0;
+        }
+        private void CE_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Result.Clear();
+        }
+
+        private void Comma_Click(object sender, RoutedEventArgs e)
+        {
+            comma();
+        }
+
+        private void Quadratic_ecuation_Click(object sender, RoutedEventArgs e)
+        {
+            avoidRepeteadCommands();
+            float number = float.Parse(Result.Text) * float.Parse(Result.Text);
+            Result.Text = number.ToString();
+        }
 
         private void Opposite_Click(object sender, RoutedEventArgs e)
         {
@@ -94,11 +118,6 @@ namespace Calculator_v3._0
                 number = float.Parse($"+{number}");
             }
             Result.Text = number.ToString();
-        }
-
-        private void Comma_Click(object sender, RoutedEventArgs e)
-        {
-            comma();
         }
 
         private void Equal_Click_1(object sender, RoutedEventArgs e)
@@ -124,89 +143,6 @@ namespace Calculator_v3._0
         {
             Divide();
         }
-
-        enum operation
-        {
-            Minus = 1,
-            Plus = 2,
-            Multiply = 3,
-            Divide = 4
-        }
-        private void makeResult(operation operationType)
-        {
-            switch (operationType)
-            {
-                case operation.Minus:
-                    Display.Text = Math.Round(_operation, 2) + "-" + Result.Text + "=";
-                    _operation -= float.Parse(Result.Text);
-                    break;
-                case operation.Plus:
-                    Display.Text = Math.Round(_operation, 2) + "+" + Result.Text + "=";
-                    _operation += float.Parse(Result.Text);
-                    break;
-                case operation.Multiply:
-                    Display.Text = Math.Round(_operation, 2) + "*" + Result.Text + "=";
-                    _operation *= float.Parse(Result.Text);
-                    break;
-                case operation.Divide:
-                    Display.Text = Math.Round(_operation, 2) + "/" + Result.Text + "=";
-                    _operation /= float.Parse(Result.Text);
-                    break;
-            }
-            Result.Clear();
-            Result.Text = Math.Round(_operation, 2).ToString();
-        }
-
-        private void Clear_Click(object sender, RoutedEventArgs e)
-        {
-            Result.Clear();
-            Display.Clear();
-            _operation = 1E-09;
-            operationType = 0;
-            commaNumber = 0;
-        }
-
-        private void Quadratic_ecuation_Click(object sender, RoutedEventArgs e)
-        {
-            avoidRepeteadCommands();
-            float number = float.Parse(Result.Text) * float.Parse(Result.Text);
-            Result.Text = number.ToString();
-        }
-
-
-        private void Operations_per_Cases(operation operationType)
-        {
-            commaNumber = 0;
-            avoidRepeteadCommands();
-            switch (operationType)
-            {
-                case operation.Minus:
-                    _operation -= float.Parse(Result.Text);
-                    break;
-                case operation.Plus:
-                    _operation += float.Parse(Result.Text);
-                    break;
-                case operation.Multiply:
-                    _operation *= float.Parse(Result.Text);
-                    break;
-                case operation.Divide:
-                    _operation /= float.Parse(Result.Text);
-                    break;
-            }
-        }
-
-        private void avoidRepeteadCommands()
-        {
-            if (Result.Text == "")
-            {
-                Result.Text = Result.Text + 0;
-            }
-        }
-        private void CE_Button_Click(object sender, RoutedEventArgs e)
-        {
-            Result.Clear();
-        }
-
         void shortcutKeys(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.D0 || e.Key == Key.NumPad0)
@@ -249,7 +185,7 @@ namespace Calculator_v3._0
             {
                 Result.Text = Result.Text + "9";
             }
-            else if (e.Key == Key.Multiply)
+            else if (e.Key == Key.Multiply) 
             {
                 Multiply();
             }
@@ -278,6 +214,68 @@ namespace Calculator_v3._0
                 Result.Text = Result.Text + "";
             }
         }
+
+        enum operation
+        {
+            Minus = 1,
+            Plus = 2,
+            Multiply = 3,
+            Divide = 4
+        }
+        private void makeResult(operation operationType)
+        {
+            switch (operationType)
+            {
+                case operation.Minus:
+                    Display.Text = Math.Round(_operation, 2) + "-" + Result.Text + "=";
+                    _operation -= float.Parse(Result.Text);
+                    break;
+                case operation.Plus:
+                    Display.Text = Math.Round(_operation, 2) + "+" + Result.Text + "=";
+                    _operation += float.Parse(Result.Text);
+                    break;
+                case operation.Multiply:
+                    Display.Text = Math.Round(_operation, 2) + "*" + Result.Text + "=";
+                    _operation *= float.Parse(Result.Text);
+                    break;
+                case operation.Divide:
+                    Display.Text = Math.Round(_operation, 2) + "/" + Result.Text + "=";
+                    _operation /= float.Parse(Result.Text);
+                    break;
+            }
+            Result.Clear();
+            Result.Text = Math.Round(_operation, 2).ToString();
+        }
+
+        private void Operations_per_Cases(operation operationType)
+        {
+            commaNumber = 0;
+            avoidRepeteadCommands();
+            switch (operationType)
+            {
+                case operation.Minus:
+                    _operation -= float.Parse(Result.Text);
+                    break;
+                case operation.Plus:
+                    _operation += float.Parse(Result.Text);
+                    break;
+                case operation.Multiply:
+                    _operation *= float.Parse(Result.Text);
+                    break;
+                case operation.Divide:
+                    _operation /= float.Parse(Result.Text);
+                    break;
+            }
+        }
+
+        private void avoidRepeteadCommands()
+        {
+            if (Result.Text == "")
+            {
+                Result.Text = Result.Text + 0;
+            }
+        }
+
 
         private void comma()
         {
