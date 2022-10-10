@@ -25,13 +25,13 @@ namespace Calculator_v3._0
     /// </summary>
     public partial class MainWindow : Window
     {
-
         public MainWindow()
         {
             InitializeComponent();
         }
         double _operation = 1E-09;
         int operationType, commaNumber;
+
         private void One_Click(object sender, RoutedEventArgs e)
         {
             Result.Text = Result.Text + 1;
@@ -96,7 +96,7 @@ namespace Calculator_v3._0
 
         private void Comma_Click(object sender, RoutedEventArgs e)
         {
-            comma();
+            avoidRepeteadComma();
         }
 
         private void Quadratic_ecuation_Click(object sender, RoutedEventArgs e)
@@ -203,7 +203,7 @@ namespace Calculator_v3._0
             }
             else if (e.Key == Key.OemComma)
             {
-                comma();
+                avoidRepeteadComma();
             }
             else if (e.Key == Key.Enter)
             {
@@ -224,6 +224,7 @@ namespace Calculator_v3._0
         }
         private void makeResult(operation operationType)
         {
+            avoidRepeteadCommands();
             switch (operationType)
             {
                 case operation.Minus:
@@ -247,7 +248,7 @@ namespace Calculator_v3._0
             Result.Text = Math.Round(_operation, 2).ToString();
         }
 
-        private void Operations_per_Cases(operation operationType)
+        private void performingTheOperation(operation operationType) 
         {
             commaNumber = 0;
             avoidRepeteadCommands();
@@ -277,7 +278,7 @@ namespace Calculator_v3._0
         }
 
 
-        private void comma()
+        private void avoidRepeteadComma()
         {
             if (commaNumber == 0)
             {
@@ -288,6 +289,7 @@ namespace Calculator_v3._0
 
         private void down()
         {
+            avoidRepeteadCommands();
             if (_operation == 1E-09)
             {
                 Display.Text = $"{Math.Round(_operation, 2)} + {Result.Text} -";
@@ -319,6 +321,7 @@ namespace Calculator_v3._0
 
         private void gathering()
         {
+            avoidRepeteadCommands();
             if (operationType == 1)
             {
                 Display.Text = Math.Round(_operation, 2) + "-" + Result.Text + "+";
@@ -346,6 +349,7 @@ namespace Calculator_v3._0
 
         private void Divide()
         {
+            avoidRepeteadCommands();
             if (_operation == 1E-09)
             {
                 Display.Text = "(" + Math.Round(_operation, 2) + "+"
@@ -373,7 +377,7 @@ namespace Calculator_v3._0
             else
             {
                 operationType = 4;
-                Display.Text = Math.Round(_operation, 2) + "/";
+                Display.Text = Math.Round(_operation, 2) + "/" + Result.Text + "/";
                 makeOperation();
             }
             operationType = 4;
@@ -381,6 +385,7 @@ namespace Calculator_v3._0
 
         private void Multiply()
         {
+            avoidRepeteadCommands();
             if (_operation == 1E-09)
             {
                 Display.Text = "(" + Math.Round(_operation, 2) + "+"
@@ -408,14 +413,14 @@ namespace Calculator_v3._0
             else
             {
                 operationType = 3;
-                Display.Text = Math.Round(_operation, 2) + "*";
+                Display.Text = Math.Round(_operation, 2) + "*" + Result.Text + "*";
                 makeOperation();
             }
             operationType = 3;
         }
         void makeOperation()
         {
-            Operations_per_Cases((operation)operationType);
+            performingTheOperation((operation)operationType);
             Result.Clear();
         }
 
