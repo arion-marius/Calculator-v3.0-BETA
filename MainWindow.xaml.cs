@@ -34,52 +34,52 @@ namespace Calculator_v3._0
 
         private void One_Click(object sender, RoutedEventArgs e)
         {
-            Result.Text = Result.Text + 1;
+            Result.Text += 1;
         }
 
         private void Two_Click(object sender, RoutedEventArgs e)
         {
-            Result.Text = Result.Text + 2;
+            Result.Text += 2;
         }
 
         private void Three_Click(object sender, RoutedEventArgs e)
         {
-            Result.Text = Result.Text + 3;
+            Result.Text += 3;
         }
 
         private void Four_Click(object sender, RoutedEventArgs e)
         {
-            Result.Text = Result.Text + 4;
+            Result.Text += 4;
         }
 
         private void Five_Click(object sender, RoutedEventArgs e)
         {
-            Result.Text = Result.Text + 5;
+            Result.Text += 5;
         }
 
         private void Six_Click_1(object sender, RoutedEventArgs e)
         {
-            Result.Text = Result.Text + 6;
+            Result.Text += 6;
         }
 
         private void Seven_Click(object sender, RoutedEventArgs e)
         {
-            Result.Text = Result.Text + 7;
+            Result.Text += 7;
         }
 
         private void Eight_Click(object sender, RoutedEventArgs e)
         {
-            Result.Text = Result.Text + 8;
+            Result.Text += 8;
         }
 
         private void Nine_Click(object sender, RoutedEventArgs e)
         {
-            Result.Text = Result.Text + 9;
+            Result.Text += 9;
         }
 
         private void Zero_Click(object sender, RoutedEventArgs e)
         {
-            Result.Text = Result.Text + 0;
+            Result.Text += 0;
         }
         private void Clear_Click(object sender, RoutedEventArgs e)
         {
@@ -147,45 +147,45 @@ namespace Calculator_v3._0
         {
             if (e.Key == Key.D0 || e.Key == Key.NumPad0)
             {
-                Result.Text = Result.Text + "0";
+                Result.Text += 0;
             }
             else if (e.Key == Key.D1 || e.Key == Key.NumPad1)
             {
-                Result.Text = Result.Text + "1";
+                Result.Text += 1;
             }
             else if (e.Key == Key.D2 || e.Key == Key.NumPad2)
             {
-                Result.Text = Result.Text + "2";
+                Result.Text += 2;
             }
             else if (e.Key == Key.D3 || e.Key == Key.NumPad3)
             {
-                Result.Text = Result.Text + "3";
+                Result.Text += 3;
             }
             else if (e.Key == Key.D4 || e.Key == Key.NumPad4)
             {
-                Result.Text = Result.Text + "4";
+                Result.Text += 4;
             }
             else if (e.Key == Key.D5 || e.Key == Key.NumPad5)
             {
-                Result.Text = Result.Text + "5";
+                Result.Text += 5;
             }
             else if (e.Key == Key.D6 || e.Key == Key.NumPad6)
             {
-                Result.Text = Result.Text + "6";
+                Result.Text += 6;
             }
             else if (e.Key == Key.D7 || e.Key == Key.NumPad7)
             {
-                Result.Text = Result.Text + "7";
+                Result.Text += 7;
             }
             else if (e.Key == Key.D8 || e.Key == Key.NumPad8)
             {
-                Result.Text = Result.Text + "8";
+                Result.Text += 8;
             }
             else if (e.Key == Key.D9 || e.Key == Key.NumPad9)
             {
-                Result.Text = Result.Text + "9";
+                Result.Text += 9;
             }
-            else if (e.Key == Key.Multiply) 
+            else if (e.Key == Key.Multiply)
             {
                 Multiply();
             }
@@ -211,7 +211,7 @@ namespace Calculator_v3._0
             }
             else
             {
-                Result.Text = Result.Text + "";
+                Result.Text += "";
             }
         }
 
@@ -248,7 +248,7 @@ namespace Calculator_v3._0
             Result.Text = Math.Round(_operation, 2).ToString();
         }
 
-        private void performingTheOperation(operation operationType) 
+        private void performingTheOperation(operation operationType)
         {
             commaNumber = 0;
             avoidRepeteadCommands();
@@ -273,7 +273,7 @@ namespace Calculator_v3._0
         {
             if (Result.Text == "")
             {
-                Result.Text = Result.Text + 0;
+                Result.Text += 0;
             }
         }
 
@@ -282,7 +282,7 @@ namespace Calculator_v3._0
         {
             if (commaNumber == 0)
             {
-                Result.Text = Result.Text + ".";
+                Result.Text += ".";
             }
             commaNumber = 1;
         }
