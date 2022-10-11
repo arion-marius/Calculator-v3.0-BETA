@@ -102,7 +102,6 @@ namespace Calculator_v3._0
 
         private void Quadratic_ecuation_Click(object sender, RoutedEventArgs e)
         {
-            avoidRepeteadCommands();
             float ecuation = float.Parse(Result.Text) * float.Parse(Result.Text);
             Result.Text = ecuation.ToString();
         }
