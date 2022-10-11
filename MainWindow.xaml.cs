@@ -31,6 +31,7 @@ namespace Calculator_v3._0
         }
         double _operation = 1E-09;
         int operationType, commaNumber;
+        string number = "";
 
         private void One_Click(object sender, RoutedEventArgs e)
         {
@@ -102,22 +103,22 @@ namespace Calculator_v3._0
         private void Quadratic_ecuation_Click(object sender, RoutedEventArgs e)
         {
             avoidRepeteadCommands();
-            float number = float.Parse(Result.Text) * float.Parse(Result.Text);
-            Result.Text = number.ToString();
+            float ecuation = float.Parse(Result.Text) * float.Parse(Result.Text);
+            Result.Text = ecuation.ToString();
         }
 
         private void Opposite_Click(object sender, RoutedEventArgs e)
         {
-            float number = float.Parse(Result.Text);
-            if (number > 0)
+            float numberWrited = float.Parse(Result.Text);
+            if (numberWrited > 0)
             {
-                number = float.Parse($"-{number}");
+                numberWrited = float.Parse($"-{numberWrited}");
             }
-            else if (number < 0)
+            else if (numberWrited < 0)
             {
-                number = float.Parse($"+{number}");
+                numberWrited = numberWrited * (-1);
             }
-            Result.Text = number.ToString();
+            Result.Text = numberWrited.ToString();
         }
 
         private void Equal_Click_1(object sender, RoutedEventArgs e)
@@ -224,23 +225,23 @@ namespace Calculator_v3._0
         }
         private void makeResult(operation operationType)
         {
-            avoidRepeteadCommands();
+            negativeNumber();
             switch (operationType)
             {
                 case operation.Minus:
-                    Display.Text = Math.Round(_operation, 2) + "-" + Result.Text + "=";
+                    Display.Text = $"{Math.Round(_operation, 2)} - {number} =";
                     _operation -= float.Parse(Result.Text);
                     break;
                 case operation.Plus:
-                    Display.Text = Math.Round(_operation, 2) + "+" + Result.Text + "=";
+                    Display.Text = $"{Math.Round(_operation, 2)} + {number} =";
                     _operation += float.Parse(Result.Text);
                     break;
                 case operation.Multiply:
-                    Display.Text = Math.Round(_operation, 2) + "*" + Result.Text + "=";
+                    Display.Text = $"{Math.Round(_operation, 2)} * {number} =";
                     _operation *= float.Parse(Result.Text);
                     break;
                 case operation.Divide:
-                    Display.Text = Math.Round(_operation, 2) + "/" + Result.Text + "=";
+                    Display.Text = $"{Math.Round(_operation, 2)} / {number} =";
                     _operation /= float.Parse(Result.Text);
                     break;
             }
@@ -255,7 +256,14 @@ namespace Calculator_v3._0
             switch (operationType)
             {
                 case operation.Minus:
-                    _operation -= float.Parse(Result.Text);
+                    if (float.Parse(Result.Text) < 0)
+                    {
+                        _operation += float.Parse(Result.Text);
+                    }
+                    else
+                    {
+                        _operation -= float.Parse(Result.Text);
+                    }
                     break;
                 case operation.Plus:
                     _operation += float.Parse(Result.Text);
@@ -289,31 +297,31 @@ namespace Calculator_v3._0
 
         private void down()
         {
-            avoidRepeteadCommands();
+            negativeNumber();
             if (_operation == 1E-09)
             {
-                Display.Text = $"{Math.Round(_operation, 2)} + {Result.Text} -";
+                Display.Text = $"{Math.Round(_operation, 2)} + {number} -";
                 equalizingTheOperation();
             }
             else if (operationType == 2)
             {
-                Display.Text = $"{Math.Round(_operation, 2)} + {Result.Text} -";
+                Display.Text = $"{Math.Round(_operation, 2)} + {number} -";
                 makeOperation();
             }
             else if (operationType == 3)
             {
-                Display.Text = $"{Math.Round(_operation, 2)} * {Result.Text} -";
+                Display.Text = $"{Math.Round(_operation, 2)} * {number} -";
                 makeOperation();
             }
             else if (operationType == 4)
             {
-                Display.Text = $"{Math.Round(_operation, 2)} / {Result.Text} - ";
+                Display.Text = $"{Math.Round(_operation, 2)} / {number} - ";
                 makeOperation();
             }
             else
             {
                 operationType = 1;
-                Display.Text = $"{Math.Round(_operation, 2)} - {Result.Text} - ";
+                Display.Text = $"{Math.Round(_operation, 2)} - {number} - ";
                 makeOperation();
             }
             operationType = 1;
@@ -321,26 +329,26 @@ namespace Calculator_v3._0
 
         private void gathering()
         {
-            avoidRepeteadCommands();
+            negativeNumber();
             if (operationType == 1)
             {
-                Display.Text = $"{Math.Round(_operation, 2)} - {Result.Text} +";
+                Display.Text = $"{Math.Round(_operation, 2)} - {number} +";
                 makeOperation();
             }
             else if (operationType == 3)
             {
-                Display.Text = $"{Math.Round(_operation, 2)} * {Result.Text} +";
+                Display.Text = $"{Math.Round(_operation, 2)} * {number} +";
                 makeOperation();
             }
             else if (operationType == 4)
             {
-                Display.Text = $"{Math.Round(_operation, 2)} / {Result.Text} +";
+                Display.Text = $"{Math.Round(_operation, 2)} / {number} +";
                 makeOperation();
             }
             else
             {
                 operationType = 2;
-                Display.Text = $"{Math.Round(_operation, 2)} + {Result.Text} +";
+                Display.Text = $"{Math.Round(_operation, 2)} + {number} +";
                 makeOperation();
             }
 
@@ -349,31 +357,31 @@ namespace Calculator_v3._0
 
         private void Divide()
         {
-            avoidRepeteadCommands();
+            negativeNumber();
             if (_operation == 1E-09)
             {
-                Display.Text = $"({Math.Round(_operation, 2)} + {Result.Text}) /";
+                Display.Text = $"({Math.Round(_operation, 2)} + {number}) /";
                 equalizingTheOperation();
             }
             else if (operationType == 1)
             {
-                Display.Text = $"({Math.Round(_operation, 2)} - {Result.Text}) /";
+                Display.Text = $"({Math.Round(_operation, 2)} - {number}) /";
                 makeOperation();
             }
             else if (operationType == 2)
             {
-                Display.Text =$"({Math.Round(_operation, 2)} + {Result.Text}) /";
+                Display.Text = $"({Math.Round(_operation, 2)} + {number}) /";
                 makeOperation();
             }
             else if (operationType == 3)
             {
-                Display.Text = $"({Math.Round(_operation, 2)} * {Result.Text}) /";
+                Display.Text = $"({Math.Round(_operation, 2)} * {number}) /";
                 makeOperation();
             }
             else
             {
                 operationType = 4;
-                Display.Text = $"{Math.Round(_operation, 2)} / {Result.Text} /";
+                Display.Text = $"{Math.Round(_operation, 2)} / {number} /";
                 makeOperation();
             }
             operationType = 4;
@@ -381,31 +389,31 @@ namespace Calculator_v3._0
 
         private void Multiply()
         {
-            avoidRepeteadCommands();
+            negativeNumber();
             if (_operation == 1E-09)
             {
-                Display.Text = $"({Math.Round(_operation, 2)} + {Result.Text}) *";
+                Display.Text = $"({Math.Round(_operation, 2)} + {number}) *";
                 equalizingTheOperation();
             }
             else if (operationType == 1)
             {
-                Display.Text = $"({Math.Round(_operation, 2)} - {Result.Text}) *";
+                Display.Text = $"({Math.Round(_operation, 2)} - {number}) *";
                 makeOperation();
             }
             else if (operationType == 2)
             {
-                Display.Text = $"({Math.Round(_operation, 2)} + {Result.Text}) *";
+                Display.Text = $"({Math.Round(_operation, 2)} + {number}) *";
                 makeOperation();
             }
             else if (operationType == 4)
             {
-                Display.Text = $"({Math.Round(_operation, 2)} / {Result.Text}) *";
+                Display.Text = $"({Math.Round(_operation, 2)} / {number}) *";
                 makeOperation();
             }
             else
             {
                 operationType = 3;
-                Display.Text = $"{Math.Round(_operation, 2)} * {Result.Text} *";
+                Display.Text = $"{Math.Round(_operation, 2)} * {number} *";
                 makeOperation();
             }
             operationType = 3;
@@ -422,6 +430,19 @@ namespace Calculator_v3._0
             avoidRepeteadCommands();
             _operation = float.Parse(Result.Text);
             Result.Clear();
+        }
+
+        void negativeNumber()
+        {
+            avoidRepeteadCommands();
+            if (float.Parse(Result.Text) < 0)
+            {
+                number = $"({Result.Text})";
+            }
+            else
+            {
+                number = Result.Text;
+            }
         }
     }
 }
