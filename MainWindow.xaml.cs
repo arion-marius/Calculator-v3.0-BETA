@@ -297,23 +297,23 @@ namespace Calculator_v3._0
             }
             else if (operationType == 2)
             {
-                Display.Text = Math.Round(_operation, 2) + "+" + Result.Text + "-";
+                Display.Text = $"{Math.Round(_operation, 2)} + {Result.Text} -";
                 makeOperation();
             }
             else if (operationType == 3)
             {
-                Display.Text = Math.Round(_operation, 2) + "*" + Result.Text + "-";
+                Display.Text = $"{Math.Round(_operation, 2)} * {Result.Text} -";
                 makeOperation();
             }
             else if (operationType == 4)
             {
-                Display.Text = Math.Round(_operation, 2) + "/" + Result.Text + "-";
+                Display.Text = $"{Math.Round(_operation, 2)} / {Result.Text} - ";
                 makeOperation();
             }
             else
             {
                 operationType = 1;
-                Display.Text = Math.Round(_operation, 2) + "-" + Result.Text + "-";
+                Display.Text = $"{Math.Round(_operation, 2)} - {Result.Text} - ";
                 makeOperation();
             }
             operationType = 1;
@@ -324,23 +324,23 @@ namespace Calculator_v3._0
             avoidRepeteadCommands();
             if (operationType == 1)
             {
-                Display.Text = Math.Round(_operation, 2) + "-" + Result.Text + "+";
+                Display.Text = $"{Math.Round(_operation, 2)} - {Result.Text} +";
                 makeOperation();
             }
             else if (operationType == 3)
             {
-                Display.Text = Math.Round(_operation, 2) + "*" + Result.Text + "+";
+                Display.Text = $"{Math.Round(_operation, 2)} * {Result.Text} +";
                 makeOperation();
             }
             else if (operationType == 4)
             {
-                Display.Text = Math.Round(_operation, 2) + "/" + Result.Text + "+";
+                Display.Text = $"{Math.Round(_operation, 2)} / {Result.Text} +";
                 makeOperation();
             }
             else
             {
                 operationType = 2;
-                Display.Text = Math.Round(_operation, 2) + "+" + Result.Text + "+";
+                Display.Text = $"{Math.Round(_operation, 2)} + {Result.Text} +";
                 makeOperation();
             }
 
@@ -352,32 +352,28 @@ namespace Calculator_v3._0
             avoidRepeteadCommands();
             if (_operation == 1E-09)
             {
-                Display.Text = "(" + Math.Round(_operation, 2) + "+"
-                    + Result.Text + ")" + "/";
+                Display.Text = $"({Math.Round(_operation, 2)} + {Result.Text}) /";
                 equalizingTheOperation();
             }
             else if (operationType == 1)
             {
-                Display.Text = "(" + Math.Round(_operation, 2) + "-"
-                    + Result.Text + ")" + "/";
+                Display.Text = $"({Math.Round(_operation, 2)} - {Result.Text}) /";
                 makeOperation();
             }
             else if (operationType == 2)
             {
-                Display.Text = "(" + Math.Round(_operation, 2) + "+"
-                    + Result.Text + ")" + "/";
+                Display.Text =$"({Math.Round(_operation, 2)} + {Result.Text}) /";
                 makeOperation();
             }
             else if (operationType == 3)
             {
-                Display.Text = "(" + Math.Round(_operation, 2) + "*"
-                    + Result.Text + ")" + "/";
+                Display.Text = $"({Math.Round(_operation, 2)} * {Result.Text}) /";
                 makeOperation();
             }
             else
             {
                 operationType = 4;
-                Display.Text = Math.Round(_operation, 2) + "/" + Result.Text + "/";
+                Display.Text = $"{Math.Round(_operation, 2)} / {Result.Text} /";
                 makeOperation();
             }
             operationType = 4;
@@ -388,32 +384,28 @@ namespace Calculator_v3._0
             avoidRepeteadCommands();
             if (_operation == 1E-09)
             {
-                Display.Text = "(" + Math.Round(_operation, 2) + "+"
-                    + Result.Text + ")" + "*";
+                Display.Text = $"({Math.Round(_operation, 2)} + {Result.Text}) *";
                 equalizingTheOperation();
             }
             else if (operationType == 1)
             {
-                Display.Text = "(" + Math.Round(_operation, 2) + "-"
-                    + Result.Text + ")" + "*";
+                Display.Text = $"({Math.Round(_operation, 2)} - {Result.Text}) *";
                 makeOperation();
             }
             else if (operationType == 2)
             {
-                Display.Text = "(" + Math.Round(_operation, 2) + "+"
-                    + Result.Text + ")" + "*";
+                Display.Text = $"({Math.Round(_operation, 2)} + {Result.Text}) *";
                 makeOperation();
             }
             else if (operationType == 4)
             {
-                Display.Text = "(" + Math.Round(_operation, 2) + "*"
-                    + Result.Text + ")" + "*";
+                Display.Text = $"({Math.Round(_operation, 2)} / {Result.Text}) *";
                 makeOperation();
             }
             else
             {
                 operationType = 3;
-                Display.Text = Math.Round(_operation, 2) + "*" + Result.Text + "*";
+                Display.Text = $"{Math.Round(_operation, 2)} * {Result.Text} *";
                 makeOperation();
             }
             operationType = 3;
