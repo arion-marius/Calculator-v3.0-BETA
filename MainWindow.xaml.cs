@@ -181,7 +181,13 @@ namespace Calculator_v3._0
 
         private void Minus_Click(object sender, RoutedEventArgs e)
         {
-            if (Result.Text == "")
+            if (operationType == 4 && Result.Text == "0")
+            {
+                Display.Text = $"{number} / 0 -";
+                Result.Text = "Cannot divide by zero";
+                return;
+            }
+            else if (Result.Text == "")
                 Result.Text += 0;
             else if (Result.Text.Contains("Overflow") || Result.Text.Contains("Cannot"))
             {
@@ -197,7 +203,13 @@ namespace Calculator_v3._0
 
         private void Plus_Click(object sender, RoutedEventArgs e)
         {
-            if (Result.Text == "")
+            if (operationType == 4 && Result.Text == "0")
+            {
+                Display.Text = $"{number} / 0 +";
+                Result.Text = "Cannot divide by zero";
+                return;
+            }
+            else if (Result.Text == "")
                 Result.Text += 0;
             else if (Result.Text.Contains("Overflow") || Result.Text.Contains("Cannot"))
             {
@@ -212,7 +224,13 @@ namespace Calculator_v3._0
         }
         void Multiplication_Click(object sender, RoutedEventArgs e)
         {
-            if (Result.Text == "")
+            if(operationType == 4 && Result.Text == "0")
+            {
+                Display.Text = $"{number} / 0 *";
+                Result.Text = "Cannot divide by zero";
+                return;
+            }
+            else if (Result.Text == "")
                 return;
             else if (Result.Text.Contains("Overflow") || Result.Text.Contains("Cannot"))
             {
@@ -228,12 +246,14 @@ namespace Calculator_v3._0
 
         private void Division_Click(object sender, RoutedEventArgs e)
         {
-            if(Result.Text == "0")
+            if (operationType == 4 && Result.Text == "0")
             {
+                Display.Text = $"{number} / 0 /";
                 Result.Text = "Cannot divide by zero";
                 return;
             }
-            if (Result.Text == "")
+           
+            else if (Result.Text == "")
                 return;
             else if (Result.Text.Contains("Overflow") || Result.Text.Contains("Cannot"))
             {
