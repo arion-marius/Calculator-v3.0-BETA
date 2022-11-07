@@ -7,11 +7,13 @@ using System.Windows;
 
 namespace Calculator_v3._0
 {
-    public class Mecanism : Window
+    internal class Class1: Window
+    {
+        public MainWindow()
         {
-            public static void Method2()
-            {
-                // code here 
-            }
+            InitializeComponent();
         }
+
+
+    }
 }

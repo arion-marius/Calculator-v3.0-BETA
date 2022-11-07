@@ -29,12 +29,17 @@ namespace Calculator_v3._0
         {
             InitializeComponent();
         }
+        public Class1()
+        {
+            InitializeComponent();
+        }
         double result = 1E-09;
         int operationType, commaNumber;
         string number = "";
 
         private void One_Click(object sender, RoutedEventArgs e)
         {
+            
             AvoidZero();
             Result.Text += 1;
         }
@@ -195,7 +200,7 @@ namespace Calculator_v3._0
                 Display.Clear();
                 Result.Text += 0;
                 number = Result.Text;
-                result = 0;
+                result = 1E-09;
                 return;
             }
             Down();
@@ -217,7 +222,7 @@ namespace Calculator_v3._0
                 Display.Clear();
                 Result.Text += 0;
                 number = Result.Text;
-                result = 0;
+                result = 1E-09;
                 return;
             }
             Gathering();
@@ -238,7 +243,7 @@ namespace Calculator_v3._0
                 Display.Clear();
                 Result.Text += 0;
                 number = Result.Text;
-                result = 0;
+                result = 1E-09;
                 return;
             }
             Multiply();
@@ -261,7 +266,7 @@ namespace Calculator_v3._0
                 Display.Clear();
                 Result.Text += 0;
                 number = Result.Text;
-                result = 0;
+                result = 1E-09;
                 return;
             }
             Divide();
@@ -533,7 +538,9 @@ namespace Calculator_v3._0
             {
                 Result.Clear();
                 Display.Clear();
-                result = 0;
+                result = 1E-09;
+                operationType = 0;
+                commaNumber = 0;
             }
             else if (Result.Text == "0")
             {
