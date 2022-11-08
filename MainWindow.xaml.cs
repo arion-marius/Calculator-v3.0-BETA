@@ -29,7 +29,7 @@ namespace Calculator_v3._0
         {
             InitializeComponent();
         }
-     
+
         double result = 1E-09;
         int operationType, commaNumber;
         string number = "";
@@ -254,7 +254,6 @@ namespace Calculator_v3._0
                 Result.Text = "Cannot divide by zero";
                 return;
             }
-
             else if (Result.Text == "")
                 return;
             else if (Result.Text.Contains("Overflow") || Result.Text.Contains("Cannot"))
