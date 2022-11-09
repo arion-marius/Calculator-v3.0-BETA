@@ -25,314 +25,531 @@ namespace Calculator_v3._0
     /// </summary>
     public partial class MainWindow : Window
     {
-
         public MainWindow()
         {
             InitializeComponent();
         }
-        double _operation = 1E-09;
-        int operationType;
+
+        double result = 1E-09;
+        int operationType, commaNumber;
+        string number = "";
+
         private void One_Click(object sender, RoutedEventArgs e)
         {
-            Result.Text = Result.Text + 1;
+
+            AvoidZero();
+            Result.Text += 1;
         }
 
         private void Two_Click(object sender, RoutedEventArgs e)
         {
-            Result.Text = Result.Text + 2;
+            AvoidZero();
+            Result.Text += 2;
         }
 
         private void Three_Click(object sender, RoutedEventArgs e)
         {
-            Result.Text = Result.Text + 3;
+            AvoidZero();
+            Result.Text += 3;
         }
 
         private void Four_Click(object sender, RoutedEventArgs e)
         {
-            Result.Text = Result.Text + 4;
+            AvoidZero();
+            Result.Text += 4;
         }
 
         private void Five_Click(object sender, RoutedEventArgs e)
         {
-            Result.Text = Result.Text + 5;
+            AvoidZero();
+            Result.Text += 5;
         }
 
         private void Six_Click_1(object sender, RoutedEventArgs e)
         {
-            Result.Text = Result.Text + 6;
+            AvoidZero();
+            Result.Text += 6;
         }
 
         private void Seven_Click(object sender, RoutedEventArgs e)
         {
-            Result.Text = Result.Text + 7;
+            AvoidZero();
+            Result.Text += 7;
         }
 
         private void Eight_Click(object sender, RoutedEventArgs e)
         {
-            Result.Text = Result.Text + 8;
+            AvoidZero();
+            Result.Text += 8;
         }
 
         private void Nine_Click(object sender, RoutedEventArgs e)
         {
-            Result.Text = Result.Text + 9;
+            AvoidZero();
+            Result.Text += 9;
         }
 
         private void Zero_Click(object sender, RoutedEventArgs e)
         {
-            Result.Text = Result.Text + 0;
+            AvoidZero();
+            Result.Text += 0;
         }
-
-        private void Opposite_Click(object sender, RoutedEventArgs e)
+        private void Clear_Click(object sender, RoutedEventArgs e)
         {
-            // will throw an exception, if the user inserts text (because he is allowed).
-            float number = float.Parse(Result.Text);
-            if (number > 0)
+            Result.Clear();
+            Display.Clear();
+            result = 1E-09;
+            operationType = 0;
+            commaNumber = 0;
+        }
+        private void CE_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (Display.Text.Contains('='))
             {
-                number = float.Parse($"-{number}");
+                Result.Clear();
+                Display.Clear();
+                result = 1E-09;
+                operationType = 0;
+                commaNumber = 0;
             }
-            else if (number < 0)
+            else
             {
-                number = float.Parse($"+{number}");
+                Result.Clear();
+                commaNumber = 0;
             }
-            Result.Text = number.ToString();
         }
 
         private void Comma_Click(object sender, RoutedEventArgs e)
         {
-            var finalNumber = Result.Text + ".";
-            Result.Text = finalNumber;
+            if (Result.Text == "")
+            {
+                Result.Text = "0";
+            }
+            else if (Result.Text.Contains("Cannot") || Result.Text.Contains("Overflow"))
+            {
+                Result.Clear();
+                Display.Clear();
+                result = 1E-09;
+                operationType = 0;
+                commaNumber = 0;
+                Result.Text += 0;
+            }
+            AvoidRepeteadComma();
+        }
+
+        private void Quadratic_ecuation_Click(object sender, RoutedEventArgs e)
+        {
+            if (Result.Text == "Overflow" || Result.Text == "" || Result.Text.Contains("Cannot"))
+                return;
+            float ecuation = float.Parse(Result.Text) * float.Parse(Result.Text);
+            if (ecuation == float.PositiveInfinity || ecuation == float.NegativeInfinity)
+            {
+                Result.Text = "Overflow";
+                return;
+            }
+            Result.Text = ecuation.ToString();
+        }
+
+        private void Opposite_Click(object sender, RoutedEventArgs e)
+        {
+            if (Result.Text == "" || Result.Text == "0" || Result.Text == "0." ||
+                Result.Text.Contains("Overflow") || Result.Text.Contains("Cannot"))
+                return;
+            if (Result.Text.Contains('-'))
+            {
+                Result.Text = $"{float.Parse(Result.Text) * (-1)}";
+            }
+            else
+            {
+                Result.Text = $"-{Result.Text}";
+            }
         }
 
         private void Equal_Click_1(object sender, RoutedEventArgs e)
         {
-            Casesx((operation)operationType);
+            if (Result.Text.Contains("Overflow") || Result.Text.Contains("Cannot"))
+            {
+                Result.Clear();
+                Display.Clear();
+                Result.Text += 0;
+                number = Result.Text;
+                result = 0;
+                return;
+            }
+            else if (Result.Text == "" || operationType == 0)
+                return;
+            MakeResult((Operation)operationType);
         }
 
         private void Minus_Click(object sender, RoutedEventArgs e)
         {
-            if (_operation == 1E-09)
+            if (operationType == 4 && Result.Text == "0")
             {
-                avoidRepeteadCommands();
-                Display.Text = $"{Math.Round(_operation, 2)} + {Result.Text} -";
-                _operation = 2 * float.Parse(Result.Text);
-                _operation -= float.Parse(Result.Text);
-                Result.Clear();
+                Display.Text = $"{number} / 0 -";
+                Result.Text = "Cannot divide by zero";
+                return;
             }
-            else if (operationType == 2)
+            else if (Result.Text == "")
+                Result.Text += 0;
+            else if (Result.Text.Contains("Overflow") || Result.Text.Contains("Cannot"))
             {
-                Display.Text = Math.Round(_operation, 2) + "+" + Result.Text + "-";
-                Operations_per_Cases((operation)operationType);
                 Result.Clear();
+                Display.Clear();
+                Result.Text += 0;
+                number = Result.Text;
+                result = 1E-09;
+                return;
             }
-            else if (operationType == 3)
-            {
-                Display.Text = Math.Round(_operation, 2) + "*" + Result.Text + "-";
-                Operations_per_Cases((operation)operationType);
-                Result.Clear();
-            }
-            else if (operationType == 4)
-            {
-                Display.Text = Math.Round(_operation, 2) + "/" + Result.Text + "-";
-                Operations_per_Cases((operation)operationType);
-                Result.Clear();
-            }
-            else
-            {
-                Display.Text = Math.Round(_operation, 2) + "-" + Result.Text + "-";
-                Operations_per_Cases((operation)operationType);
-                Result.Clear();
-            }
-            operationType = 1;
+            Down();
         }
 
         private void Plus_Click(object sender, RoutedEventArgs e)
         {
-            if (operationType == 1)
+            if (operationType == 4 && Result.Text == "0")
             {
-                Display.Text = Math.Round(_operation, 2) + "-" + Result.Text + "+";
-                Operations_per_Cases((operation)operationType);
-                Result.Clear();
+                Display.Text = $"{number} / 0 +";
+                Result.Text = "Cannot divide by zero";
+                return;
             }
-            else if (operationType == 3)
+            else if (Result.Text == "")
+                Result.Text += 0;
+            else if (Result.Text.Contains("Overflow") || Result.Text.Contains("Cannot"))
             {
-                Display.Text = Math.Round(_operation, 2) + "*" + Result.Text + "+";
-                Operations_per_Cases((operation)operationType);
                 Result.Clear();
+                Display.Clear();
+                Result.Text += 0;
+                number = Result.Text;
+                result = 1E-09;
+                return;
             }
-            else if (operationType == 4)
+            Gathering();
+        }
+        void Multiplication_Click(object sender, RoutedEventArgs e)
+        {
+            if (operationType == 4 && Result.Text == "0")
             {
-                Display.Text = Math.Round(_operation, 2) + "/" + Result.Text + "+";
-                Operations_per_Cases((operation)operationType);
+                Display.Text = $"{number} / 0 *";
+                Result.Text = "Cannot divide by zero";
+                return;
+            }
+            else if (Result.Text == "")
+                return;
+            else if (Result.Text.Contains("Overflow") || Result.Text.Contains("Cannot"))
+            {
                 Result.Clear();
+                Display.Clear();
+                Result.Text += 0;
+                number = Result.Text;
+                result = 1E-09;
+                return;
+            }
+            Multiply();
+        }
+
+        private void Division_Click(object sender, RoutedEventArgs e)
+        {
+            if (operationType == 4 && Result.Text == "0")
+            {
+                Display.Text = $"{number} / 0 /";
+                Result.Text = "Cannot divide by zero";
+                return;
+            }
+            else if (Result.Text == "")
+                return;
+            else if (Result.Text.Contains("Overflow") || Result.Text.Contains("Cannot"))
+            {
+                Result.Clear();
+                Display.Clear();
+                Result.Text += 0;
+                number = Result.Text;
+                result = 1E-09;
+                return;
+            }
+            Divide();
+        }
+        void ShortcutKeys(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.D0 || e.Key == Key.NumPad0)
+            {
+                Result.Text += 0;
+            }
+            else if (e.Key == Key.D1 || e.Key == Key.NumPad1)
+            {
+                Result.Text += 1;
+            }
+            else if (e.Key == Key.D2 || e.Key == Key.NumPad2)
+            {
+                Result.Text += 2;
+            }
+            else if (e.Key == Key.D3 || e.Key == Key.NumPad3)
+            {
+                Result.Text += 3;
+            }
+            else if (e.Key == Key.D4 || e.Key == Key.NumPad4)
+            {
+                Result.Text += 4;
+            }
+            else if (e.Key == Key.D5 || e.Key == Key.NumPad5)
+            {
+                Result.Text += 5;
+            }
+            else if (e.Key == Key.D6 || e.Key == Key.NumPad6)
+            {
+                Result.Text += 6;
+            }
+            else if (e.Key == Key.D7 || e.Key == Key.NumPad7)
+            {
+                Result.Text += 7;
+            }
+            else if (e.Key == Key.D8 || e.Key == Key.NumPad8)
+            {
+                Result.Text += 8;
+            }
+            else if (e.Key == Key.D9 || e.Key == Key.NumPad9)
+            {
+                Result.Text += 9;
+            }
+            else if (e.Key == Key.Multiply)
+            {
+                Multiply();
+            }
+            else if (e.Key == Key.Divide)
+            {
+                Divide();
+            }
+            else if (e.Key == Key.OemPlus)
+            {
+                Gathering();
+            }
+            else if (e.Key == Key.OemMinus)
+            {
+                Down();
+            }
+            else if (e.Key == Key.OemComma)
+            {
+                AvoidRepeteadComma();
+            }
+            else if (e.Key == Key.Enter)
+            {
+                MakeResult((Operation)operationType);
             }
             else
             {
-                operationType = 2;
-                Display.Text = Math.Round(_operation, 2) + "+" + Result.Text + "+";
-                Operations_per_Cases((operation)operationType);
-                Result.Clear();
+                Result.Text += "";
             }
-            operationType = 2;
         }
-            
-        enum operation
+
+        enum Operation
         {
             Minus = 1,
             Plus = 2,
             Multiply = 3,
             Divide = 4
         }
-        void Casesx(operation operationType)
+        private void MakeResult(Operation operationType)
         {
+            NegativeNumber();
             switch (operationType)
             {
-                case operation.Minus:
-                    Display.Text = Math.Round(_operation, 2) + "-" + Result.Text + "=";
-                    _operation -= float.Parse(Result.Text);
+                case Operation.Minus:
+                    Display.Text = $"{Math.Round(result, 2)} - {number} =";
+                    if (Result.Text.Contains('-'))
+                        result += float.Parse(Result.Text);
+                    else
+                        result -= float.Parse(Result.Text);
                     break;
-                case operation.Plus:
-                    Display.Text = Math.Round(_operation, 2) + "+" + Result.Text + "=";
-                    _operation += float.Parse(Result.Text);
+                case Operation.Plus:
+                    Display.Text = $"{Math.Round(result, 2)} + {number} =";
+                    result += float.Parse(Result.Text);
                     break;
-                case operation.Multiply:
-                    Display.Text = Math.Round(_operation, 2) + "*" + Result.Text + "=";
-                    _operation *= float.Parse(Result.Text);
+                case Operation.Multiply:
+                    Display.Text = $"{Math.Round(result, 2)} * {number} =";
+                    result *= float.Parse(Result.Text);
                     break;
-                case operation.Divide:
-                    Display.Text = Math.Round(_operation, 2) + "/" + Result.Text + "=";
-                    _operation /= float.Parse(Result.Text);
+                case Operation.Divide:
+                    Display.Text = $"{Math.Round(result, 2)} / {number} =";
+                    if (Result.Text == "0")
+                    {
+                        Result.Text = "Cannot divide by zero";
+                        return;
+                    }
+                    result /= float.Parse(Result.Text);
                     break;
             }
             Result.Clear();
-            Result.Text = Math.Round(_operation, 2).ToString();
-        }
-     
-        private void Clear_Click(object sender, RoutedEventArgs e)
-        {
-            Result.Clear();
-            Display.Clear();
-            _operation = 1E-09;
-            operationType = 0;
+            Result.Text = Math.Round(result, 2).ToString();
         }
 
-        private void Quadratic_ecuation_Click(object sender, RoutedEventArgs e)
+        private void PerformingTheOperation(Operation operationType)
         {
-            avoidRepeteadCommands();
-            float number = float.Parse(Result.Text) * float.Parse(Result.Text);
-            Result.Text = number.ToString();
+            commaNumber = 0;
+            AvoidRepeteadCommands();
+            switch (operationType)
+            {
+                case Operation.Minus:
+                    if (float.Parse(Result.Text) < 0)
+                    {
+                        result += float.Parse(Result.Text);
+                    }
+                    else
+                    {
+                        result -= float.Parse(Result.Text);
+                    }
+                    break;
+                case Operation.Plus:
+                    result += float.Parse(Result.Text);
+                    break;
+                case Operation.Multiply:
+                    result *= float.Parse(Result.Text);
+                    break;
+                case Operation.Divide:
+                    result /= float.Parse(Result.Text);
+                    break;
+            }
         }
 
-        private void Multiplication_Click(object sender, RoutedEventArgs e)
+        private void AvoidRepeteadCommands()
         {
-            if (_operation == 1E-09)
+
+            if (Result.Text == "" && (operationType == 1 || operationType == 2))
             {
-                avoidRepeteadCommands();
-                Display.Text = "(" + Math.Round(_operation, 2) + "+"
-                    + Result.Text + ")" + "*";
-                _operation = Math.Round(_operation, 2) + float.Parse(Result.Text);
-                Result.Clear();
+                Result.Text += 0;
             }
-            else if (operationType == 1)
+            else if (Result.Text == "" && (operationType == 3 || operationType == 4))
             {
-                Display.Text = "(" + Math.Round(_operation, 2) + "-"
-                    + Result.Text + ")" + "*";
-                Operations_per_Cases((operation)operationType);
-                Result.Clear();
+                Result.Text += 1;
             }
-            else if (operationType == 2)
+        }
+
+
+        private void AvoidRepeteadComma()
+        {
+            if (commaNumber == 0)
             {
-                Display.Text = "(" + Math.Round(_operation, 2) + "+"
-                    + Result.Text + ")" + "*";
-                Operations_per_Cases((operation)operationType);
-                Result.Clear();
+                Result.Text += ".";
             }
-            else if (operationType == 4)
+            commaNumber = 1;
+        }
+
+        private void Down()
+        {
+            ChainOfOperations();
+            NegativeNumber();
+            if (result == 1E-09)
             {
-                Display.Text = "(" + Math.Round(_operation, 2) + "*"
-                    + Result.Text + ")" + "*";
-                Operations_per_Cases((operation)operationType);
-                Result.Clear();
+                EqualizingTheOperation();
+                Display.Text = $"{Math.Round(result, 2)} -";
             }
             else
             {
-                Display.Text = Math.Round(_operation, 2) + "*";
-                Operations_per_Cases((operation)operationType);
-                Result.Clear();
+                MakeOperation();
+                Display.Text = $"{Math.Round(result, 2)} - ";
             }
-            operationType = 3;
+            operationType = 1;
         }
 
-        private void Division_Click(object sender, RoutedEventArgs e)
+        private void Gathering()
         {
-            if (_operation == 1E-09)
+            operationType = 2;
+            ChainOfOperations();
+            NegativeNumber();
+            MakeOperation();
+            Display.Text = $"{Math.Round(result, 2)} +";
+        }
+
+        private void Divide()
+        {
+            ChainOfOperations();
+            NegativeNumber();
+            if (result == 1E-09)
             {
-                avoidRepeteadCommands();
-                Display.Text = "(" + Math.Round(_operation, 2) + "+"
-                    + Result.Text + ")" + "/";
-                _operation = Math.Round(_operation, 2) + float.Parse(Result.Text);
-                Result.Clear();
-            }
-            else if (operationType == 1)
-            {
-                Display.Text = "(" + Math.Round(_operation, 2) + "-"
-                    + Result.Text + ")" + "/";
-                Operations_per_Cases((operation)operationType);
-                Result.Clear();
-            }
-            else if (operationType == 2)
-            {
-                Display.Text = "(" + Math.Round(_operation, 2) + "+"
-                    + Result.Text + ")" + "/";
-                Operations_per_Cases((operation)operationType);
-                Result.Clear();
-            }
-            else if (operationType == 3)
-            {
-                Display.Text = "(" + Math.Round(_operation, 2) + "*"
-                    + Result.Text + ")" + "/";
-                Operations_per_Cases((operation)operationType);
-                Result.Clear();
+                EqualizingTheOperation();
+                Display.Text = $"{Math.Round(result, 2)} /";
             }
             else
             {
-                Display.Text = Math.Round(_operation, 2) + "/";
-                Operations_per_Cases((operation)operationType);
-                Result.Clear();
+                MakeOperation();
+                Display.Text = $"{Math.Round(result, 2)} /";
             }
             operationType = 4;
         }
 
-        private void Operations_per_Cases(operation operationType)
+        private void Multiply()
         {
-            avoidRepeteadCommands();
-            switch (operationType)
+            ChainOfOperations();
+            NegativeNumber();
+            if (result == 1E-09)
             {
-                case operation.Minus:
-                    _operation -= float.Parse(Result.Text);
-                    break;
-                case operation.Plus:
-                    _operation += float.Parse(Result.Text);
-                    break;
-                case operation.Multiply:
-                    _operation *= float.Parse(Result.Text);
-                    break;
-                case operation.Divide:
-                    _operation /= float.Parse(Result.Text);
-                    break;
+                EqualizingTheOperation();
+                Display.Text = $"{Math.Round(result, 2)} *";
             }
+            else
+            {
+                MakeOperation();
+                Display.Text = $"{Math.Round(result, 2)} *";
+            }
+            operationType = 3;
+        }
+        void MakeOperation()
+        {
+            PerformingTheOperation((Operation)operationType);
+            Result.Clear();
+        }
+
+        void EqualizingTheOperation()
+        {
+            commaNumber = 0;
+            AvoidRepeteadCommands();
+            result = float.Parse(Result.Text);
+            Result.Clear();
+        }
+
+        void NegativeNumber()
+        {
+            AvoidRepeteadCommands();
+
+            if (float.Parse(Result.Text) < 0)
+            {
+                number = $"({Result.Text})";
+            }
+            else
+            {
+                number = Result.Text;
+            }
+
 
         }
 
-        private void avoidRepeteadCommands()
+        public void Afisare2()
         {
             if (Result.Text == "")
             {
-                Result.Text = Result.Text + 0;
+                Result.Text += 0;
             }
         }
-        private void CE_Button_Click(object sender, RoutedEventArgs e)
+
+        void AvoidZero()
         {
-            Result.Clear();
+            if (Result.Text.Contains("Cannot") || Display.Text.Contains("=") || Result.Text.Contains("Overflow"))
+            {
+                Result.Clear();
+                Display.Clear();
+                result = 1E-09;
+                operationType = 0;
+                commaNumber = 0;
+            }
+            else if (Result.Text == "0")
+            {
+                Result.Clear();
+            }
+        }
+
+        void ChainOfOperations()
+        {
+            if (Display.Text.Contains('='))
+            {
+                result = 0;
+            }
         }
     }
 }

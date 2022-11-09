@@ -12,12 +12,12 @@
             <GradientStop Color="#FFAC9292" Offset="0.502"/>
         </LinearGradientBrush>
     </Window.Background>
-    <Grid>
+    <Grid Background="#FFE3E3E3">
         <Grid.RowDefinitions>
             <RowDefinition Height="101*"/>
             <RowDefinition Height="212*"/>
         </Grid.RowDefinitions>
-        <TextBox x:Name="Result" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="388" Height="104" FontSize="72" BorderBrush="White"/>
+        <TextBox x:Name="Result" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="388" Height="104" FontSize="72" BorderBrush="#FFE3E3E3" IsReadOnly="True" Background="#FFE3E3E3"/>
         <Button x:Name="One" Content="1" HorizontalAlignment="Left" Height="68" Margin="10,3,0,0" VerticalAlignment="Top" Width="84" FontSize="48" Click="One_Click" Grid.Row="1"/>
         <Button x:Name="Two" Content="2" HorizontalAlignment="Left" Height="68" Margin="120,3,0,0" VerticalAlignment="Top" Width="84" FontSize="48" Click="Two_Click" Grid.Row="1"/>
         <Button x:Name="Three" Content="3" HorizontalAlignment="Left" Height="68" Margin="233,3,0,0" VerticalAlignment="Top" Width="84" FontSize="48" Click="Three_Click" Grid.Row="1"/>
@@ -29,16 +29,16 @@
         <Button x:Name="Opposite" Content="+/-" HorizontalAlignment="Left" Height="68" Margin="10,319,0,0" VerticalAlignment="Top" Width="84" Grid.Row="1" FontSize="48" Click="Opposite_Click"/>
         <Button x:Name="Zero" Content="0" HorizontalAlignment="Left" Height="68" Margin="120,319,0,0" VerticalAlignment="Top" Width="84" Grid.Row="1" FontSize="48" Click="Zero_Click"/>
         <Button x:Name="Comma" Content="." HorizontalAlignment="Left" Height="68" Margin="233,319,0,0" VerticalAlignment="Top" Width="84" Grid.Row="1" FontSize="48" Click="Comma_Click"/>
-        <Button x:Name="Clear" Content="C" HorizontalAlignment="Left" Height="68" Margin="335,3,0,0" VerticalAlignment="Top" Width="63" FontSize="36" Click="Clear_Click" Grid.Row="1"/>
+        <Button x:Name="Clear" Content="C" HorizontalAlignment="Left" Height="37" Margin="120,161,0,0" VerticalAlignment="Top" Width="84" FontSize="24" Click="Clear_Click"/>
         <Button x:Name="Plus" Content="+" HorizontalAlignment="Left" Height="68" Margin="335,105,0,0" VerticalAlignment="Top" Width="63" Grid.Row="1" FontSize="48" Click="Plus_Click"/>
         <Button x:Name="Minus" Content="-" HorizontalAlignment="Left" Height="68" Margin="335,209,0,0" VerticalAlignment="Top" Width="63" Grid.Row="1" FontSize="48" Click="Minus_Click"/>
         <Button x:Name="Six" Content="6" HorizontalAlignment="Left" Height="68" Margin="233,105,0,0" Grid.Row="1" VerticalAlignment="Top" Width="84" Click="Six_Click_1" FontSize="48"/>
         <Button x:Name="Equal" Content="=" HorizontalAlignment="Left" Height="68" Margin="335,319,0,0" Grid.Row="1" VerticalAlignment="Top" Width="63" FontSize="36" Click="Equal_Click_1"/>
-        <TextBox x:Name="Display" HorizontalAlignment="Left" Margin="267,52,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="131" Height="29" FontSize="22" BorderBrush="White"/>
+        <TextBox x:Name="Display" HorizontalAlignment="Left" Margin="267,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="131" Height="29" FontSize="20" BorderBrush="{x:Null}" IsReadOnly="True" Background="{x:Null}"/>
         <Button x:Name="Quadratic_ecuation" Content="x^2" HorizontalAlignment="Left" Height="37" Margin="10,161,0,0" VerticalAlignment="Top" Width="84" FontSize="24" Click="Quadratic_ecuation_Click"/>
-        <Button x:Name="Multiplication" Content="*" HorizontalAlignment="Left" Height="37" Margin="120,161,0,0" VerticalAlignment="Top" Width="84" Click="Multiplication_Click" FontSize="36"/>
-        <Button x:Name="Division" Content="/" HorizontalAlignment="Left" Height="37" Margin="233,161,0,0" VerticalAlignment="Top" Width="84" FontSize="24" Click="Division_Click"/>
-        <Button x:Name="CE_Button" Content="CE" HorizontalAlignment="Left" Height="37" Margin="335,161,0,0" VerticalAlignment="Top" Width="63" Click="CE_Button_Click" FontSize="20"/>
+        <Button x:Name="Multiplication" Content="*" HorizontalAlignment="Left" Height="68" Margin="335,3,0,0" VerticalAlignment="Top" Width="63" Click="Multiplication_Click" FontSize="48" Grid.Row="1"/>
+        <Button x:Name="Division" Content="/" HorizontalAlignment="Left" Height="37" Margin="335,161,0,0" VerticalAlignment="Top" Width="63" FontSize="24" Click="Division_Click"/>
+        <Button x:Name="CE_Button" Content="CE" HorizontalAlignment="Left" Height="37" Margin="233,161,0,0" VerticalAlignment="Top" Width="84" Click="CE_Button_Click" FontSize="24"/>
 
     </Grid>
 </Window>
